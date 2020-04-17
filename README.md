@@ -31,3 +31,45 @@ Enter Don't cares:
 ```
 
 > **The PI's order is not guaranteed in every optimizing**
+
+## About class Minterm
+`Minterm` 클래스는 `num, x, var_count, sums` 속성을 가지고 있다.
+
+1. `num` 속성은 해당 minterm이 가지고 있는 1의 위치 정보를 저장
+2. `x` 속성은 해당 minterm이 가지고 있는 x의 위치 정보를 저장
+3. `var_count` 속성은 해당 minterm의 변수 개수를 저장
+4. `sums` 속성은 조합하고 있는 minterm의 집합
+  >`num`과 `x`속성을 2진수로 변환하면 위치 정보를 바로 알 수 있다.
+
+### 언제 조합되는가?
+비교하는 두 implicant의 x 위치가 동일하고, 1과 0 차이가 딱 한 자리 수일때 조합할 수 있다.
+
+> 0X01 (1,5):  `Minterm(num=0b0001, var_count=4, x=0b0100, sums={1,5})`
+>
+> 1X01 (9,13): `Minterm(num=0b1001, car_count=4, x=0b0100, sums={9,13})`
+
+위 두 implicant는 X의 위치가 같고, 1비트 차이가 나기 때문에 조합할 수 있다.
+
+x의 위치 정보는 `0b0100 == 0b0100` 으로 서로 같다.
+
+`0b0001 ^ 0b1001 == 0b1000`이므로, 1이 하나만 나온다.
+
+따라서 위 두 implicant를 조합하면 XX01이고 
+
+1의 위치는 0b0001, x의 위치는 0b1100으로 표현할 수 있다.
+
+> XX01 (1,5,9,13): `Minterm(num=0b0001, var_count=4, x=0b1100, sums={1,5,9,13})`
+
+### 알고리즘 도출
+위 과정을 다음과 같이 정리할 수 있다.
+1. 각 implicant의 `x`속성이 같은지 확인
+2. 각 implicant의 `num`속성을 XOR 연산
+3. 2번 결과값을 `var_count`번마다 한 칸씩 비트 시프트 하면서 1이 한번만 나오는 지 확인
+
+1번과 3번의 확인 과정이 참이라면 조합할 수 있다.
+
+조합할 때, 새로운 Minterm 인스턴스를 만드는데 새로운 인스턴스의 속성값은 다음과 같다.
+
+1. `num`속성에는 기존 두 implicant의 `num`속성을 AND 연산한 값을 지정
+2. `x` 속성에는 기존 두 implicant의 `num`속성을 XOR 연산한 값과 기존 `x`속성을 더한 값을 지정
+3. `sums` 속성에는 기존 두 implicant의 합집합을 지정
