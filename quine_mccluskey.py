@@ -22,7 +22,7 @@ class QM:
       return False
   
   def __compare(self, left, right):   # 0,1 비교 및 x 동일 비교
-    if self.__check(left.num ^ right.num) and left.x == right.x:
+    if self.__check(left ^ right) and left.x == right.x:
       return True   # 각 자릿수에서 다른 부분 딱 1개일때, x부분 동일할때
     else:
       return False
