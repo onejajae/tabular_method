@@ -44,7 +44,7 @@ class QM:
             new_term = Minterm(left & right, self.var_count, x+left.x, left.sums | right.sums)
             flag = True
             for pi in next_group[i]:    # 중복 탐색
-              if pi.sums-new_term.sums == set(): 
+              if pi.sums==new_term.sums: 
                 flag=False
                 break
             if flag:                    # 중복이 없어야 추가
@@ -113,8 +113,7 @@ class QM:
         if cover >= minterms:
           # minterm을 모두 포함하면 바로 탐색 종료
           return list(result)+used
-
-    return list(result)
+    return list(result)+used
 
       
 
