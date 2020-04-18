@@ -8,7 +8,13 @@ if __name__ == "__main__":
 
   tabular = QM(varCount, minterms, dontcares)
   optimized_prime_implicants = tabular.optimize()
+  minimized_prime_implicants = tabular.minimize()
   
+  print("\nAll Prime Implicants")
   for key, value in optimized_prime_implicants.items():
     for j in value:
       print(j)
+
+  print("\nMinimized Prime Implicants")
+  for pi in minimized_prime_implicants:
+    print(pi)

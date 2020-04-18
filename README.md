@@ -4,30 +4,45 @@
   > `$ python main.py`
 
 ## Example
-1. Optimizing 4 variables boolean function with don't cares
+1. Optimizing a 4 variables boolean function with don't cares
 ```
 $ python main.py
 Enter number of variables: 4
 Enter Minterms: 1 2 5 6 7 8 9 10 14
 Enter Don't cares: 3 12
-({8, 9}, (ab'c'))
+
+All Prime Implicants
 ({2, 3, 6, 7}, (a'c))
+({1, 9}, (b'c'd))
 ({8, 10, 12, 14}, (ad'))
 ({1, 3, 5, 7}, (a'd))
-({1, 9}, (b'c'd))
+({8, 9}, (ab'c'))
 ({2, 10, 6, 14}, (cd'))
+
+Minimized Prime Implicants
+({1, 3, 5, 7}, (a'd))
+({2, 10, 6, 14}, (cd'))
+({8, 9}, (ab'c'))
 ```
 
-2. Optimizing 3 variables boolean function with no don't care
+2. Optimizing a 3 variables boolean function with no don't care
   > If you don't want to use "Don't cares", you just have to press the enter key.
 ```
+$ python main.py
 Enter number of variables: 3
 Enter Minterms: 0 1 5 6 7
 Enter Don't cares: 
+
+All Prime Implicants
 ({0, 1}, (a'b'))
 ({1, 5}, (b'c))
 ({5, 7}, (ac))
 ({6, 7}, (ab))
+
+Minimized Prime Implicants
+({6, 7}, (ab))
+({0, 1}, (a'b'))
+({1, 5}, (b'c))
 ```
 
 > **The PI's order is not guaranteed in every optimizing**
@@ -73,3 +88,6 @@ x의 위치 정보는 `0b0100 == 0b0100` 으로 서로 같다.
 1. `num`속성에는 기존 두 implicant의 `num`속성을 AND 연산한 값을 지정
 2. `x` 속성에는 기존 두 implicant의 `num`속성을 XOR 연산한 값과 기존 `x`속성을 더한 값을 지정
 3. `sums` 속성에는 기존 두 implicant의 합집합을 지정
+
+## PI Chart 문제점
+Petrick's Method가 적용되지 않았기 때문에 시간복잡도가 상당하다. `O(2^n)`
